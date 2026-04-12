@@ -4,7 +4,7 @@
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 
-// ===== BLE =====
+// BLE
 #include <NimBLEDevice.h>
 
 NimBLECharacteristic *pCharacteristic;
@@ -14,13 +14,12 @@ bool deviceConnected = false;
 #define SERVICE_UUID        "12345678-1234-1234-1234-1234567890ab"
 #define CHARACTERISTIC_UUID "abcd1234-5678-1234-5678-abcdef123456"
 
-// ===== MPU6050 =====
 MPU6050 mpu1(0x68); // thigh
 MPU6050 mpu2(0x69); // shin
 
 float offset = 0;
 
-// ===== REP VARIABLES =====
+// REP VARIABLES 
 float last_angle = 0;
 bool in_motion = false;
 bool passed_min = false;
@@ -30,7 +29,7 @@ int rep_count = 0;
 int good_reps = 0;
 int bad_reps = 0;
 
-// ===== MQTT =====
+// MQTT 
 const char* ssid = "abcnet";
 const char* password = "aaaaaaaa";
 
@@ -42,7 +41,7 @@ const char* mqtt_pass = "Aloysius1234";
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
 
-// ===== BLE Callbacks =====
+// BLE Callbacks 
 class MyServerCallbacks: public NimBLEServerCallbacks {
   void onConnect(NimBLEServer* pServer) {
     deviceConnected = true;
@@ -55,14 +54,14 @@ class MyServerCallbacks: public NimBLEServerCallbacks {
   }
 };
 
-// ===== Angle Function =====
+// Angle Function  
 float getAngle(MPU6050 &mpu) {
   int16_t ax, ay, az;
   mpu.getAcceleration(&ax, &ay, &az);
   return atan2(ax, az) * 180 / PI;
 }
 
-// ===== WiFi =====
+//  WiFi  
 void setup_wifi() {
   WiFi.begin(ssid, password);
   Serial.print("Connecting WiFi");
@@ -81,7 +80,7 @@ void setup_wifi() {
   }
 }
 
-// ===== MQTT reconnect =====
+//  MQTT reconnect  
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Connecting MQTT...");
@@ -95,7 +94,7 @@ void reconnect() {
   }
 }
 
-// ===== SETUP =====
+// SETUP 
 void setup() {
   Serial.begin(115200);
 
@@ -220,7 +219,7 @@ void loop() {
     Serial.println(value);
   }
 
-  // ===== MQTT (5 Hz) =====
+  // MQTT (5 Hz) 
   if (millis() - last_mqtt > 200) {
     if (client.connected()) {
       String mqttMsg = "Angle:" + String(angle,1) +
