@@ -139,6 +139,6 @@ python backend.py
 ## 👤 Author
 
 Vimukthi Weerakkodi Mohottige Don  
-Wireless Measurement Course
+BME project
 
 
