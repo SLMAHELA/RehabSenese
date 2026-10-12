@@ -6,7 +6,7 @@ from influxdb_client import InfluxDBClient, Point
 broker = "3f3e94d58cb04730b7ae589933af0dd2.s1.eu.hivemq.cloud"
 port = 8883
 username = "RehabSebse"
-password = "Aloysius1234"
+password = "************"
 
 topic = "rehab/patient1/angle"
 
